@@ -1,0 +1,10 @@
+.cover {
+	background-color: gainsboro;
+	border-radius: 5%;
+}
+
+.dateAndMore {
+	position: absolute;
+	top: 170px;
+	left: 0;
+}
