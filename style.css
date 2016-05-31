@@ -1,3 +1,11 @@
+#posts {
+	list-style-type: none
+}
+
+#posts li {
+	margin-bottom: 10px;
+}
+
 .cover {
 	background-color: gainsboro;
 	border-radius: 5%;
@@ -8,3 +16,4 @@
 	top: 170px;
 	left: 0;
 }
+

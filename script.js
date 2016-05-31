@@ -1,9 +1,32 @@
 var app = angular.module('redditClone', []);
 
 app.controller('MainController', function($scope) {
-	
+	window.scope = $scope;
+
 	$scope.view = {};
 	$scope.view.showForm = false;
+	$scope.view.sort = 'votes';
+
+	$scope.view.reverse = "+";
+
+
+
+	$scope.sort = function(sortBy) {
+
+		sortBy = sortBy || $scope.view.sort;
+
+		var reverse = document.getElementById('reverse');
+
+		if (reverse) {
+			$scope.view.reverse = "-";
+		}
+		else {
+			$scope.view.reverse = "-";
+		}
+		// debugger
+
+		$scope.view.sort = $scope.view.reverse + sortBy;
+	}
 
 	$scope.form = function() {
 		if ($scope.view.showForm === false) {
@@ -38,7 +61,10 @@ app.controller('MainController', function($scope) {
 
 	
 
-	$scope.posts = [{image: "http://lorempixel.com/400/200", author: 'Hamlet', title: "SoMa", description: 'great place', votes: 0, date: Date.now(), comments: ['bla'], showComments: false}];
+	$scope.posts = [{image: "http://lorempixel.com/400/200", author: 'Hamlet', title: "SoMa", description: 'great place', votes: 0, date: Date.now(), comments: [{author: 'RUFINA'}], showComments: false, addComment: false, voteStyle: {} }, 
+	{image: "http://lorempixel.com/400/200", author: 'Hamlet', title: "Yerevan", description: 'great place', votes: 5, date: Date.now(), comments: [{author: 'RUFINA'}], showComments: false, addComment: false, voteStyle: {} },
+	{image: "http://lorempixel.com/400/200", author: 'Hamlet', title: "LA", description: 'great place', votes: 3, date: Date.now(), comments: [{author: 'RUFINA'}], showComments: false, addComment: false, voteStyle: {} }
+	];
 	
 	$scope.voteStyle = {};
 
@@ -50,18 +76,18 @@ app.controller('MainController', function($scope) {
 
 	$scope.voteUp = function(post) {
 		// var votes = post.votes;
-		
+
 		post.votes++;
 
 		
 		if (post.votes < 0) {
-			$scope.voteStyle = {color: 'red'};
+			post.voteStyle = {color: 'red'};
 		}
 		else if (post.votes === 0) {
-			$scope.voteStyle = {color: 'black'};
+			post.voteStyle = {color: 'black'};
 		}
 		else {
-			$scope.voteStyle = {color: 'green'};
+			post.voteStyle = {color: 'green'};
 		}
 	};
 
@@ -69,13 +95,13 @@ app.controller('MainController', function($scope) {
 		post.votes--;
 
 		if (post.votes < 0) {
-			$scope.voteStyle = {color: 'red'};
+			post.voteStyle = {color: 'red'};
 		}
 		else if (post.votes === 0) {
-			$scope.voteStyle = {color: 'black'};
+			post.voteStyle = {color: 'black'};
 		}
 		else {
-			$scope.voteStyle = {color: 'green'};
+			post.voteStyle = {color: 'green'};
 		}
 	};
 
@@ -108,7 +134,8 @@ app.controller('MainController', function($scope) {
 
 		post.comments.push(newComment);
 
-		post.showComments = false;
+		post.showComments = true;
+		post.addComment = false;
 
 		post.comAuthor = '';
 		post.comment = '';
